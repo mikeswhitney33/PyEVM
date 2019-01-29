@@ -59,15 +59,34 @@ def magnify_motion(vid, fps, low, high, levels=3, amplification=20):
 	return final
 
 
+types = {
+	'color':magnify_color,
+	'motion':magnify_motion
+}
+
+
 if __name__=="__main__":
 	parser = argparse.ArgumentParser()
 	parser.add_argument('filename', type=str)
+	parser.add_argument('type', type=str)
 	parser.add_argument('low', type=float)
 	parser.add_argument('high', type=float)
 	parser.add_argument('levels', type=int)
 	parser.add_argument('alpha', type=float)
+	parser.add_argument('--outputfile', type=str, default='out.avi')
 	args = parser.parse_args()
 
 	vid, fps = utils.load_video(args.filename)
-	res = magnify_color(vid, fps, args.low, args.high, args.levels, args.alpha)
-	utils.save_video(res)
+	if args.type in types:
+		res = types[args.type](
+			vid,
+			fps,
+			args.low,
+			args.high,
+			args.levels,
+			args.alpha)
+		utils.save_video(res, args.outputfile)
+	else:
+		raise KeyError("{} is not a valid type.  Only one of these work: {}".format(args.type, types.keys()))
+		# res = magnify_color(vid, fps, args.low, args.high, args.levels, args.alpha)
+

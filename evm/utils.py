@@ -58,7 +58,7 @@ def gaussian_video(video, levels=3):
 	return vid_data
 
 
-def reconstruct_video_g(amp_video,origin_video,levels=3):
+def reconstruct_video_g(amp_video, original_video, levels=3):
 	"""
 	Function: reconstruct_video_g
 	-----------------------------
@@ -74,12 +74,12 @@ def reconstruct_video_g(amp_video,origin_video,levels=3):
 	--------
 		the reconstructed video
 	"""
-	final_video = np.zeros(origin_video.shape)
+	final_video = np.zeros(original_video.shape)
 	for i in range(0, amp_video.shape[0]):
 		img = amp_video[i]
 		for x in range(levels):
 			img = cv2.pyrUp(img)
-		img = img + origin_video[i]
+		img = img + original_video[i]
 		final_video[i] = img
 	return final_video
 
@@ -127,7 +127,7 @@ def laplacian_video(video, levels=3):
 	n = video.shape[0]
 	for i in range(0, n):
 		frame=video[i]
-		pyr = utils.build_laplacian_pyramid(frame,levels=levels)
+		pyr = build_laplacian_pyramid(frame,levels=levels)
 		if i==0:
 			for k in range(levels):
 				tensor_list.append(np.zeros((n, *pyr[k].shape)))

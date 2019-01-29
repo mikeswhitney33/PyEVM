@@ -8,3 +8,10 @@ This is a python implementation of eulerian video magnification《[Eulerian Vide
 * OpenCV for pyramids and io
 * SciPy for signal processing
 * NumPy for image processing
+
+
+## Testing
+To see the module work run the command:
+```
+python -m evm.evm <videofile> <lowband> <highband> <pyramidlevels> <alpha>
+```
