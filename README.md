@@ -5,6 +5,6 @@ This is a python implementation of eulerian video magnification《[Eulerian Vide
 
 
 ## Required Libraries
-* cv2 for pyramids and io
+* OpenCV for pyramids and io
 * SciPy for signal processing
 * NumPy for image processing
