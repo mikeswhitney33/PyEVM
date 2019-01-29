@@ -13,5 +13,5 @@ This is a python implementation of eulerian video magnification《[Eulerian Vide
 ## Testing
 To see the module work run the command:
 ```
-python -m evm.evm <videofile> <lowband> <highband> <pyramidlevels> <alpha>
+python -m evm.evm <videofile> <type> <lowband> <highband> <pyramidlevels> <alpha>
 ```
