@@ -17,19 +17,3 @@ pip install opencv_python-3.1.0-cp35-cp35m-win_amd64.whl
 ## Other Libraries
 * SciPy for signal processing
 * NumPy for image processing
-
-## Result
-Original video：
-![原图](http://img.blog.csdn.net/20160927155312178)
-
-Color magnification：
-![色彩放大](http://img.blog.csdn.net/20160927155358125)
-The color of chest changes.
-
-Motion magnification：
-![运动放大](http://img.blog.csdn.net/20160927155455071)
-You can see the motion of chest has been magnified.
-
-## Chinese version
-You can read my blog for more information
->http://blog.csdn.net/tinyzhao/article/details/52681250
