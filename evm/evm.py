@@ -1,6 +1,25 @@
 import argparse
+import numpy as np
+from scipy.signal import find_peaks
 
 import evm.utils as utils
+
+
+def find_heart_rate(vid, fps, low, high, levels=3, alpha=20):
+	res = magnify_color(vid, fps, low, high, levels, alpha)
+	avg = np.mean(res, axis=(1, 2, 3))
+	peaks, _ = find_peaks(avg, distance=10)
+	beats = peaks.shape[0]
+	num_frames = avg.shape[0]
+	seconds = num_frames / fps
+	rate = 60 * beats / seconds
+	print("""Beats: {}
+Num Frames: {}
+Frames Per Second: {}
+Seconds: {}
+Heart Rate: {}
+""".format(beats, num_frames, fps, seconds, rate))
+	return rate
 
 
 def magnify_color(vid, fps, low, high, levels=3, alpha=20):
@@ -61,7 +80,8 @@ def magnify_motion(vid, fps, low, high, levels=3, amplification=20):
 
 types = {
 	'color':magnify_color,
-	'motion':magnify_motion
+	'motion':magnify_motion,
+
 }
 
 
@@ -78,15 +98,22 @@ if __name__=="__main__":
 
 	vid, fps = utils.load_video(args.filename)
 	if args.type in types:
-		res = types[args.type](
-			vid,
-			fps,
-			args.low,
-			args.high,
-			args.levels,
-			args.alpha)
-		utils.save_video(res, args.outputfile)
+		hr = find_heart_rate(vid, fps, args.low, args.high, args.levels, args.alpha)
+		print("Heart Rate:", hr)
+		# res = types[args.type](
+		# 	vid,
+		# 	fps,
+		# 	args.low,
+		# 	args.high,
+		# 	args.levels,
+		# 	args.alpha)
+		# import matplotlib.pyplot as plt
+		# import numpy as np
+		# from scipy.signal import find_peaks
+		# avg = np.mean(res, axis=(1, 2, 3))
+		# peaks, _ = find_peaks(avg, distance=10)
+		# print("Heart Rate:", peaks.shape[0])
+		# utils.save_video(res, args.outputfile)
 	else:
-		raise KeyError("{} is not a valid type.  Only one of these work: {}".format(args.type, types.keys()))
-		# res = magnify_color(vid, fps, args.low, args.high, args.levels, args.alpha)
-
+		raise KeyError("{} is not a valid type.  \
+			Only one of these work: {}".format(args.type, types.keys()))
